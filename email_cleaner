@@ -1,0 +1,19 @@
+#I was doing some email web scraping and periods at the end of the email kept getting scraped with them so I created this snipped to clean the emails. Cheers!
+
+import pandas as pd
+
+#rad in a cscv file of dirty emails
+df = pd.read_csv("emails_dirty.csv")
+original_df = pd.read_csv("emails_dirty.csv")
+
+#loop through each email and remove the period if it has one
+for email in df["Email"]:
+    if email[-1] == '.':
+        length = len(email)
+        email = email[:(length - 1)]
+        print(email)
+        df.loc[df["Email"] == email] = email
+
+#write the cleaned list of emails to a new csv
+original_df['Email'] = df['Email']
+original_df.to_csv('emails_clean.csv', encoding='utf-8', index=False)
